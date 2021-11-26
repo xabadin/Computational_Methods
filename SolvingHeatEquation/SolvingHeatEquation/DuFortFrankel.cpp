@@ -14,5 +14,3 @@ std::string DuFortFrankel::SchemeName(double DeltaT) {
 	std::string str = "DuFortFrankel" + std::to_string(DeltaT);
 	return str;
 }
-
-

@@ -147,6 +147,7 @@
     <ClCompile Include="Laasonen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="Richardson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnalyticalSolution.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="ImplicitSchemes.h" />
     <ClInclude Include="Laasonen.h" />
     <ClInclude Include="Parameters.h" />
+    <ClInclude Include="Richardson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
