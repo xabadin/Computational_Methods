@@ -10,7 +10,9 @@ using namespace std;
 /*
 * Default constructor - that inherits from the ImplicitSchemes default constractor, @see ImplicitSchemes
 */
-Laasonen::Laasonen(Parameters parameters, int indexDeltaT) : ImplicitSchemes(parameters, indexDeltaT) {}
+Laasonen::Laasonen(Parameters parameters, int indexDeltaT) : ImplicitSchemes(parameters, indexDeltaT) {
+	a = parameters.getDiffusivity() * (parameters.getVecDeltaT()[indexDeltaT] / pow(parameters.getDeltaX(), 2));
+}
 
 
 // PRINT RESULTS

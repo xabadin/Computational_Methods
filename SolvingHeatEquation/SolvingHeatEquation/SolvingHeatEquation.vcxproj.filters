@@ -33,6 +33,15 @@
     <ClCompile Include="CrankNicolson.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ExplicitSchemes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DuFortFrankel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Richardson.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Parameters.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CrankNicolson.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplicitSchemes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DuFortFrankel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Richardson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

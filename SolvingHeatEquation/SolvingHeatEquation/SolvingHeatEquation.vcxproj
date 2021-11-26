@@ -141,17 +141,23 @@
   <ItemGroup>
     <ClCompile Include="AnalyticalSolution.cpp" />
     <ClCompile Include="CrankNicolson.cpp" />
+    <ClCompile Include="DuFortFrankel.cpp" />
+    <ClCompile Include="ExplicitSchemes.cpp" />
     <ClCompile Include="ImplicitSchemes.cpp" />
     <ClCompile Include="Laasonen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="Richardson.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnalyticalSolution.h" />
     <ClInclude Include="CrankNicolson.h" />
+    <ClInclude Include="DuFortFrankel.h" />
+    <ClInclude Include="ExplicitSchemes.h" />
     <ClInclude Include="ImplicitSchemes.h" />
     <ClInclude Include="Laasonen.h" />
     <ClInclude Include="Parameters.h" />
+    <ClInclude Include="Richardson.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

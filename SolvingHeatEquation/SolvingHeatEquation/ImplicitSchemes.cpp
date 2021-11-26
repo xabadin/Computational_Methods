@@ -10,7 +10,6 @@ ImplicitSchemes::ImplicitSchemes(Parameters parameters, int indexDeltaT) {
 	this->lowerDiagonal.push_back(0);
 	this->mainDiagonal.push_back(1);
 	this->upperDiagonal.push_back(0);
-	this->a = parameters.getDiffusivity() * (parameters.getVecDeltaT()[indexDeltaT] / pow(parameters.getDeltaX(), 2));
 }
 
 // SOLVE TRIDIAGONAL SYSTEM A * x = d
