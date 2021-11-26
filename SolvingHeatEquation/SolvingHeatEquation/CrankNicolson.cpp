@@ -37,7 +37,6 @@ vector <double> CrankNicolson::computeRHS(vector<double>& temperature)
 	for (int i = 1; i < temp.size() - 1; i++)
 	{
 		temp[i] = (1 - 2 * a) * temperature[i] + a * temperature[i + 1] + a * temperature[i - 1];
-		cout << "i = " << i << " : " << temp[i] << endl;
 
 	}
 	return temp;
