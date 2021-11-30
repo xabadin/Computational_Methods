@@ -1,11 +1,9 @@
 #ifndef ANALYTICALSOLUTION_H
 #define ANALYTICALSOLUTION_H
-
 #include"Parameters.h"
 #include <vector>
 #include <fstream>
-
-
+#include <cmath>
 
 class AnalyticalSolution {
 private:
