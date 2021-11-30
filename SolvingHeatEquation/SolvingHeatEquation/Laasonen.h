@@ -11,6 +11,6 @@ public:
 	// Constructor
 	Laasonen(Parameters parameters, int indexDeltaT);
   
-	std::string SchemeName();
+	virtual std::string schemeName();
 };
 #endif

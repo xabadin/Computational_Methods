@@ -113,8 +113,6 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		wallTemperature = computeRHS(wallTemperature);
 		wallTemperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, wallTemperature);
 	}
-
-	std::cout << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 	return schemeSolutions;
 }
 

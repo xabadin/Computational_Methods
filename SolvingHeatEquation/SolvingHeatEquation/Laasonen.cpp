@@ -10,7 +10,6 @@ Laasonen::Laasonen(Parameters parameters, int indexDeltaT) : ImplicitSchemes(par
 	r = parameters.getDiffusivity() * (parameters.getVecDeltaT()[indexDeltaT] / pow(parameters.getDeltaX(), 2));
 }
 
-std::string Laasonen::SchemeName() {
-	std::string str = "Laasonen";
-	return str;
+std::string Laasonen::schemeName() {
+	return "Laasonen";
 }

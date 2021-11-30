@@ -13,27 +13,27 @@ int main()
 	AnalyticalSolution analyticalSolution = AnalyticalSolution(parameters);
   
 	//Explicit constructors
-	DuFortFrankel dufort = DuFortFrankel(parameters); //rajouter le indice delta t
+	DuFortFrankel duFortFrankel = DuFortFrankel(parameters); //rajouter le indice delta t
 	Richardson richardson = Richardson(parameters);
 
 	std::vector<std::vector<double>> analyticalSolutions;
 	std::vector<std::string> computationalTimeResults;
 
 	//To generate the analytical solutions for the 5 time points.
-	for (int unsigned i = 0; i < parameters.getOutputTimePoints().size(); i++) {
-		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getOutputTimePoints()[i]));
+	for (int unsigned i = 0; i < parameters.getVecOutputTimePoints().size(); i++) {
+		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getVecOutputTimePoints()[i]));
 	}
 
 	Printer printer = Printer(analyticalSolutions);
 	printer.printAnalytical(parameters);
 
 	//Print Explicit
-	printer.print(parameters, dufort.SchemeName(), dufort.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
-	printer.print(parameters, richardson.SchemeName(), richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
+	printer.print(parameters, duFortFrankel.schemeName(), duFortFrankel.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]));
+	printer.print(parameters, richardson.schemeName(), richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]));
 
 	//Computational time explicit
-	computationalTimeResults.push_back(dufort.SchemeName() + ";" + to_string(dufort.getComputationalTime()));
-	computationalTimeResults.push_back(richardson.SchemeName() + ";" + to_string(richardson.getComputationalTime()));
+	computationalTimeResults.push_back(duFortFrankel.schemeName() + ";" + std::to_string(duFortFrankel.getComputationalTime()));
+	computationalTimeResults.push_back(richardson.schemeName() + ";" + std::to_string(richardson.getComputationalTime()));
 
 	printer.printComputationalTime(computationalTimeResults);
 	

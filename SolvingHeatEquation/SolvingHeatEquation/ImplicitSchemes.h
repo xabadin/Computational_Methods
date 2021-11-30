@@ -1,6 +1,8 @@
 #ifndef IMPLICITSCHEMES_H // include guard
 #define IMPLICITSCHEMES_H
 #include "parameters.h"
+#include <ctime>
+#include <string>
 
 class ImplicitSchemes {
 protected:
@@ -27,6 +29,6 @@ public:
 	std::vector<double> thomasAlgorithm(std::vector<double> topDiagonal, std::vector<double> midDiagonal, std::vector<double> botDiagonal, std::vector<double> d);
 
 	virtual std::vector<double> computeRHS(std::vector<double> &RHS);
-	std::string virtual SchemeName() = 0;
+	virtual std::string schemeName() = 0;
 };
 #endif

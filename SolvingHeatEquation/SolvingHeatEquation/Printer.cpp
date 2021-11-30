@@ -26,7 +26,7 @@ void Printer::printAnalytical(Parameters parameters) {
 	}
 	ofs << std::endl;
 	for (int unsigned i = 0; i < analyticalSolutions.size(); i++) {
-		ofs << parameters.getOutputTimePoints()[i] << ";";
+		ofs << parameters.getVecOutputTimePoints()[i] << ";";
 
 		for (int unsigned x = 0; x < analyticalSolutions[i].size(); x++) {
 			ofs << analyticalSolutions[i][x] << ";";

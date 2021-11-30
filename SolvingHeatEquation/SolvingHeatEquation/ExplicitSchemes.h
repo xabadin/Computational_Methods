@@ -19,8 +19,8 @@ public:
 
 	std::vector<std::vector<double>> solve(Parameters parameters, double DeltaT, int timePoints); //Solving solution for our explicit schemes
 
-	double virtual NextTimeStep(Parameters parameters, int i, double DeltaT) = 0;
-	std::string virtual SchemeName() = 0;
+	virtual double  NextTimeStep(Parameters parameters, int i, double DeltaT) = 0;
+	virtual std::string  schemeName() = 0;
 
 	double getComputationalTime();
 	void setComputationalTime(int time);
