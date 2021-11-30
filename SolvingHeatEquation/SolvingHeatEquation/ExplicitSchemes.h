@@ -11,7 +11,6 @@ protected:
 	std::vector<double> v1; //N values
 	std::vector<double> v0; //N-1 values
 
-	std::vector<std::vector<double>> schemeSolutions;
 	int computationalTime;
 
 public:

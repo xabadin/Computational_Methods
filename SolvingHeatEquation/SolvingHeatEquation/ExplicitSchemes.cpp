@@ -14,8 +14,7 @@ ExplicitSchemes::ExplicitSchemes(Parameters parameters) {
 	this->v1 = std::vector<double>(parameters.getSpacePoints(), parameters.getInitialTemp());
 	this->v0 = std::vector<double>(parameters.getSpacePoints(), parameters.getInitialTemp());
 
-	//std::vector<std::vector<double>> schemeSolutions;
-	int computationalTime;
+	int computationalTime = 0;
 } //Constructor with parameters
 
 
@@ -40,7 +39,7 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 		}
 
 		//to get only the 0.1's values
-		if (n%10 == 0 && n>0) {			
+		if (n%10 == 0) {			
 			schemeSolutions.push_back(v2);
 		}
 
