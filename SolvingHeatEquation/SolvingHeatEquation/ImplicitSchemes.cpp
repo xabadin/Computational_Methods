@@ -101,7 +101,8 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 	* @return schemeSolutions
 	*/
 	for (int t = 0; t < parameters.getVecTimePoints()[indexDeltaT]; t++) {
-
+		//Puts the solutions in schemeSolutions 
+		//It only works if the outputs are equally spaced
 		if (t % ((parameters.getVecTimePoints()[indexDeltaT]) / parameters.getVecOutputTimePoints().size()) == 0) {
 			schemeSolutions.push_back(wallTemperature);
 		}
