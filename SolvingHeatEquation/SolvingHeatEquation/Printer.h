@@ -1,17 +1,18 @@
 #ifndef PRINTER_H
 #define PRINTER_H
 #include"parameters.h"
-#include<iostream>
-#include<vector>
 #include<string>
+#include<fstream>
 
 class Printer
 {
 private:
+	//Analytical Solutions
 	std::vector<std::vector<double>> analyticalSolutions;
+
 public:
 	Printer(); //default constructor
-	Printer(Parameters parameters, std::vector<std::vector<double>> analyticalSolutions); //Constructor with parameters
+	Printer(std::vector<std::vector<double>> analyticalSolutions); //Constructor with parameters
 
 	void print(Parameters parameters, std::string filename, std::vector<std::vector<double>> schemesolutions);
 	void printAnalytical(Parameters parameters);

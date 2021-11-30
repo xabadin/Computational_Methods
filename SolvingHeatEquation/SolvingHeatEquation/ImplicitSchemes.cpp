@@ -1,17 +1,20 @@
 #include "implicitSchemes.h"
-#include <cmath>
-#include<ctime>
 
 // CONSTRUCTORS
 /*
 * Default constructor
 */
+ImplicitSchemes::ImplicitSchemes() {
+	this->r = 0;
+	this->computationalTime = 0;
+};
 
-ImplicitSchemes::ImplicitSchemes(Parameters parameters, int indexDeltaT) {
+ImplicitSchemes::ImplicitSchemes(Parameters parameters) {
 	this->lowerDiagonal.push_back(0);
 	this->mainDiagonal.push_back(1);
 	this->upperDiagonal.push_back(0);
-	this->a = parameters.getDiffusivity() * (parameters.getVecDeltaT()[indexDeltaT] / pow(parameters.getDeltaX(), 2));
+	this->r = 0;
+	this->computationalTime = 0;
 }
 
 // SOLVE TRIDIAGONAL SYSTEM A * x = d
@@ -60,7 +63,7 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> topDiag
 	return x;
 }
 
-std::vector<double> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
+std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
 {
 	std::clock_t start;
 	start = std::clock();
@@ -74,17 +77,17 @@ std::vector<double> ImplicitSchemes::solve(Parameters parameters, int indexDelta
 	* Initialize the first element of the right hand side vector d, of the system A*x = d
 	* to the left side surface temperature of the wall, which is part of the boundary condition
 	*/
-	temperature.push_back(parameters.getSurfaceTemp());
+	wallTemperature.push_back(parameters.getSurfaceTemp());
 
 	/*
 	* Setting the value of the diagonals of the Laasonen matrix system
 	* as explained in the report, the upper and lower diagonals set to (-a), whereas the main diagonal set to (1 + (2 * a))
 	*/
 	for (int i = 1; i < parameters.getSpacePoints() - 1; i++) {
-		lowerDiagonal.push_back(-a);
-		mainDiagonal.push_back(1 + (2 * a));
-		upperDiagonal.push_back(-a);
-		temperature.push_back(parameters.getInitialTemp());
+		lowerDiagonal.push_back(-r);
+		mainDiagonal.push_back(1 + (2 * r));
+		upperDiagonal.push_back(-r);
+		wallTemperature.push_back(parameters.getInitialTemp());
 	}
 
 	upperDiagonal.push_back(0);
@@ -94,22 +97,29 @@ std::vector<double> ImplicitSchemes::solve(Parameters parameters, int indexDelta
 	* Initialize the last element of the right hand side vector d, of the system A*x = d
 	* to the right side surface temperature of the wall, which is part of the boundary condition
 	*/
-	temperature.push_back(parameters.getSurfaceTemp());
+	wallTemperature.push_back(parameters.getSurfaceTemp());
 
 	/*
-	* Solve Laasonen scheme tridiagonal system using Thomas Algorithm
-	* @return temperature
+	* Solve the tridiagonal system using Thomas Algorithm
+	* @return schemeSolutions
 	*/
-	for (int t = 0; t < parameters.getTimePoints()[indexDeltaT]; t++) {
-		temperature = computeRHS(temperature);
-		temperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, temperature);
+	for (int t = 0; t < parameters.getVecTimePoints()[indexDeltaT]; t++) {
+		//Puts the solutions in schemeSolutions 
+		//It only works if the outputs are equally spaced
+		if (t % ((parameters.getVecTimePoints()[indexDeltaT]) / parameters.getVecOutputTimePoints().size()) == 0) {
+			schemeSolutions.push_back(wallTemperature);
+		}
+
+		wallTemperature = computeRHS(wallTemperature);
+		wallTemperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, wallTemperature);
 	}
+
 	std::cout << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
-	return temperature;
+	return schemeSolutions;
 }
 
-std::vector<double> ImplicitSchemes::computeRHS(vector<double> &temperature) 
+std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &RHS) 
 {
-	return temperature;
+	return RHS;
 }
 

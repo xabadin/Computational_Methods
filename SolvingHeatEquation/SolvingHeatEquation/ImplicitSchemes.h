@@ -1,30 +1,32 @@
 #ifndef IMPLICITSCHEMES_H // include guard
 #define IMPLICITSCHEMES_H
-#include <iostream>
-#include <vector>
 #include "parameters.h"
-
-using namespace std;
 
 class ImplicitSchemes {
 protected:
 	// Vectors of the tridiagonal matrix upper, middle and lower diagonals respectively
-	vector<double>  upperDiagonal, mainDiagonal, lowerDiagonal;
+	std::vector<double>  upperDiagonal, mainDiagonal, lowerDiagonal;
 	// Right hand side vector, that takes the boundary condition
-	vector<double> temperature;
+	std::vector<double> wallTemperature;
 	// @param a is the constant of the 1D heat partial differential equation
-	double a;
+	double r;
+	//computational time of the scheme
+	double computationalTime;
+	//Used to store the solutions at each OutputTimePoints selected in the parameters class
+	std::vector<std::vector<double>> schemeSolutions;
+	
 public:
 	// Default contructor
+	ImplicitSchemes();
 
-	ImplicitSchemes(Parameters parameters, int indexDeltaT);
+	ImplicitSchemes(Parameters parameters);
 
-	vector<double> solve(Parameters parameters, int indexDeltaT);
+	std::vector<std::vector<double>> solve(Parameters parameters, int indexDeltaT);
 
 	// Thomas Algorithm for solving the tridiagonal system A * x = d
-	vector<double> thomasAlgorithm(vector<double> topDiagonal, vector<double> midDiagonal, vector<double> botDiagonal, vector<double> d);
+	std::vector<double> thomasAlgorithm(std::vector<double> topDiagonal, std::vector<double> midDiagonal, std::vector<double> botDiagonal, std::vector<double> d);
 
-	virtual vector<double> computeRHS(vector<double> &temperature);
+	virtual std::vector<double> computeRHS(std::vector<double> &RHS);
 	std::string virtual SchemeName() = 0;
 };
 #endif

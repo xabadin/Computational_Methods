@@ -5,27 +5,16 @@
 #include "CrankNicolson.h"
 #include "DuFortFrankel.h"
 #include "Richardson.h"
-#include "ExplicitSchemes.h"
 #include "Printer.h"
-
-#include<iostream>
-#include<vector>
-#include<fstream>
-#include<string>
 
 int main()
 {
 	Parameters parameters = Parameters();
 	AnalyticalSolution analyticalSolution = AnalyticalSolution(parameters);
-
+  
 	//Explicit constructors
 	DuFortFrankel dufort = DuFortFrankel(parameters); //rajouter le indice delta t
 	Richardson richardson = Richardson(parameters);
-
-	//Implicit constructors
-	Laasonen laasonen = Laasonen(parameters, 0);
-	CrankNicolson crankNicolson = CrankNicolson(parameters, 0);
-
 
 	std::vector<std::vector<double>> analyticalSolutions;
 	std::vector<std::string> computationalTimeResults;
@@ -35,36 +24,29 @@ int main()
 		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getOutputTimePoints()[i]));
 	}
 
-	Printer printer = Printer(parameters, analyticalSolutions);
+	Printer printer = Printer(analyticalSolutions);
 	printer.printAnalytical(parameters);
 
 	//Print Explicit
 	printer.print(parameters, dufort.SchemeName(), dufort.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
 	printer.print(parameters, richardson.SchemeName(), richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
 
-	//Implicit
-	crankNicolson.printCrankNicolson(parameters, 0);
-	laasonen.printLaasonen(parameters, 0);
-
 	//Computational time explicit
 	computationalTimeResults.push_back(dufort.SchemeName() + ";" + to_string(dufort.getComputationalTime()));
 	computationalTimeResults.push_back(richardson.SchemeName() + ";" + to_string(richardson.getComputationalTime()));
 
-
-
 	printer.printComputationalTime(computationalTimeResults);
+	
+	//Print Implicit Schemes
+	for (int indexDeltaT = 0; indexDeltaT < parameters.getVecDeltaT().size(); ++indexDeltaT)
+	{
+		Laasonen laasonen = Laasonen(parameters, indexDeltaT);
+		printer.print(parameters, "laasonen" + std::to_string(parameters.getVecDeltaT()[indexDeltaT]), laasonen.solve(parameters, indexDeltaT));
+	}
 
+	CrankNicolson crankNicolson = CrankNicolson(parameters, 0);
 
-
-
-	//for (int unsigned i = 0; i < parameters.getVecDeltaT().size(); i++) {
-	//	laasonen.printLaasonen(parameters, i);
-	//}
-	//
-
-	/*for (int unsigned x = 0; x < 2; x++) {
-		std::cout << computationalTimeResults[x] << std::endl;
-	}*/
+	printer.print(parameters, "crankNicolson" + std::to_string(parameters.getVecDeltaT()[0]), crankNicolson.solve(parameters, 0));
 
 	return 0;
 }
