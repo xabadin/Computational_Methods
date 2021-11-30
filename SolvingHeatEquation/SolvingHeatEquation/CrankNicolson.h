@@ -9,6 +9,7 @@ public:
 	CrankNicolson(Parameters parameters, int indexDeltaT);
 
 	// Compute RHS of CrankNicolson scheme
-	virtual std::vector<double> computeRHS(std::vector<double>& RHS);
+	virtual vector<double> computeRHS(vector<double>& initialValues);
+	std::string schemeName();
 };
 #endif

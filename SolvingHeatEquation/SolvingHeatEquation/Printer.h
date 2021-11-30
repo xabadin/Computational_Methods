@@ -7,7 +7,7 @@
 class Printer
 {
 private:
-	//les données analytical
+	//Analytical Solutions
 	std::vector<std::vector<double>> analyticalSolutions;
 
 public:
@@ -17,6 +17,5 @@ public:
 	void print(Parameters parameters, std::string filename, std::vector<std::vector<double>> schemesolutions);
 	void printAnalytical(Parameters parameters);
 	void printComputationalTime(std::vector<std::string> computationalTimeResults);
-
 };
 #endif

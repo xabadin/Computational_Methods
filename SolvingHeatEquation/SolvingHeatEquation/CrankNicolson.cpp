@@ -25,3 +25,8 @@ vector <double> CrankNicolson::computeRHS(vector<double>& RHS)
 	}
 	return temp;
 }
+
+std::string CrankNicolson::SchemeName() {
+	std::string str = "CrankNicolson";
+	return str;
+}

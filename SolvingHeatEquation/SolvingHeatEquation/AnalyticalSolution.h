@@ -6,6 +6,7 @@
 #include <fstream>
 
 
+
 class AnalyticalSolution {
 private:
 	const int iterations = 10000;

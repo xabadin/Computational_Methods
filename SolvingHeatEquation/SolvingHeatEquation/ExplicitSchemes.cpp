@@ -1,16 +1,29 @@
 #include "ExplicitSchemes.h"
+#include<iostream>
+#include<fstream>
+#include<ctime>
+#include<cmath>
 
-ExplicitSchemes::ExplicitSchemes() {} //Default constructor
+ExplicitSchemes::ExplicitSchemes() {
+	computationalTime = 0;
+} //Default constructor
 
 //Need to change variable names here
 ExplicitSchemes::ExplicitSchemes(Parameters parameters) {
 	this->v2 = std::vector<double>(parameters.getSpacePoints());
 	this->v1 = std::vector<double>(parameters.getSpacePoints(), parameters.getInitialTemp());
 	this->v0 = std::vector<double>(parameters.getSpacePoints(), parameters.getInitialTemp());
+
+	int computationalTime = 0;
 } //Constructor with parameters
 
 
-void ExplicitSchemes::solve(Parameters parameters, double DeltaT, int meshsize_t) {
+std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, double DeltaT, int meshsize_t) {
+	// passer le deltaT dans le constructeur
+	std::clock_t start;
+	start = std::clock();
+	std::vector<std::vector<double>> schemeSolutions;
+	int compt = 0;
 
 	for (int n = 0; n < meshsize_t; n++)
 	{
@@ -25,10 +38,25 @@ void ExplicitSchemes::solve(Parameters parameters, double DeltaT, int meshsize_t
 			}
 		}
 
-		//On remplace tt les vecteur, cad v0=v1 puis v1=v2 et on recalcule v2 en boucle
+		//to get only the 0.1's values
+		if (n%10 == 0) {			
+			schemeSolutions.push_back(v2);
+		}
+
 		if (n < meshsize_t) {
 			v0 = v1;
 			v1 = v2;
 		}
 	}
+	int computtime = std::clock() - start;
+	setComputationalTime(computtime);
+	return schemeSolutions;
+}
+
+void ExplicitSchemes::setComputationalTime(int time) {
+	(*this).computationalTime = time;
+}
+
+double ExplicitSchemes::getComputationalTime() {
+	return (*this).computationalTime;
 }

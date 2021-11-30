@@ -9,30 +9,33 @@
 
 int main()
 {
-	Parameters parameters = Parameters(); //Creation of the parameters object with all the data
-
+	Parameters parameters = Parameters();
 	AnalyticalSolution analyticalSolution = AnalyticalSolution(parameters);
-	std::vector<std::vector<double>> analyticalSolutions;
-
-	for (int i = 0; i < parameters.getVecOutputTimePoints().size(); ++i)
-	{
-		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getVecOutputTimePoints()[i]));
-	}
-
-	
-
-	DuFortFrankel duFortFrankel = DuFortFrankel(parameters);
+  
+	//Explicit constructors
+	DuFortFrankel dufort = DuFortFrankel(parameters); //rajouter le indice delta t
 	Richardson richardson = Richardson(parameters);
 
-	richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]);
-	duFortFrankel.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]);
+	std::vector<std::vector<double>> analyticalSolutions;
+	std::vector<std::string> computationalTimeResults;
+
+	//To generate the analytical solutions for the 5 time points.
+	for (int unsigned i = 0; i < parameters.getOutputTimePoints().size(); i++) {
+		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getOutputTimePoints()[i]));
+	}
 
 	Printer printer = Printer(analyticalSolutions);
-
 	printer.printAnalytical(parameters);
 
-	//Print Explicit Schemes
-	
+	//Print Explicit
+	printer.print(parameters, dufort.SchemeName(), dufort.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
+	printer.print(parameters, richardson.SchemeName(), richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getTimePoints()[0]));
+
+	//Computational time explicit
+	computationalTimeResults.push_back(dufort.SchemeName() + ";" + to_string(dufort.getComputationalTime()));
+	computationalTimeResults.push_back(richardson.SchemeName() + ";" + to_string(richardson.getComputationalTime()));
+
+	printer.printComputationalTime(computationalTimeResults);
 	
 	//Print Implicit Schemes
 	for (int indexDeltaT = 0; indexDeltaT < parameters.getVecDeltaT().size(); ++indexDeltaT)
@@ -46,4 +49,4 @@ int main()
 	printer.print(parameters, "crankNicolson" + std::to_string(parameters.getVecDeltaT()[0]), crankNicolson.solve(parameters, 0));
 
 	return 0;
-} 
+}

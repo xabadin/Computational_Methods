@@ -27,5 +27,6 @@ public:
 	std::vector<double> thomasAlgorithm(std::vector<double> topDiagonal, std::vector<double> midDiagonal, std::vector<double> botDiagonal, std::vector<double> d);
 
 	virtual std::vector<double> computeRHS(std::vector<double> &RHS);
+	std::string virtual SchemeName() = 0;
 };
 #endif

@@ -65,6 +65,9 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> topDiag
 
 std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
 {
+	std::clock_t start;
+	start = std::clock();
+	
 	/*
 	* brief solve 1D heat equation using Laasonen leads to a tridiagonal system
 	* that can be efficiently solve by Thomas Algorithm, @see the implementation of Thomas Algorithm in ImplicitSchemes file
@@ -110,11 +113,13 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		wallTemperature = computeRHS(wallTemperature);
 		wallTemperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, wallTemperature);
 	}
+
+	std::cout << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 	return schemeSolutions;
 }
 
-std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &wallTemperature) 
+std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &RHS) 
 {
-	return wallTemperature;
+	return RHS;
 }
 
