@@ -1,5 +1,6 @@
 #include "implicitSchemes.h"
 #include <cmath>
+#include<ctime>
 
 // CONSTRUCTORS
 /*
@@ -10,6 +11,7 @@ ImplicitSchemes::ImplicitSchemes(Parameters parameters, int indexDeltaT) {
 	this->lowerDiagonal.push_back(0);
 	this->mainDiagonal.push_back(1);
 	this->upperDiagonal.push_back(0);
+	this->a = parameters.getDiffusivity() * (parameters.getVecDeltaT()[indexDeltaT] / pow(parameters.getDeltaX(), 2));
 }
 
 // SOLVE TRIDIAGONAL SYSTEM A * x = d
@@ -60,6 +62,9 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> topDiag
 
 std::vector<double> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
 {
+	std::clock_t start;
+	start = std::clock();
+	
 	/*
 	* brief solve 1D heat equation using Laasonen leads to a tridiagonal system
 	* that can be efficiently solve by Thomas Algorithm, @see the implementation of Thomas Algorithm in ImplicitSchemes file
@@ -99,6 +104,7 @@ std::vector<double> ImplicitSchemes::solve(Parameters parameters, int indexDelta
 		temperature = computeRHS(temperature);
 		temperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, temperature);
 	}
+	std::cout << "Time: " << (std::clock() - start) / (double)(CLOCKS_PER_SEC / 1000) << " ms" << std::endl;
 	return temperature;
 }
 

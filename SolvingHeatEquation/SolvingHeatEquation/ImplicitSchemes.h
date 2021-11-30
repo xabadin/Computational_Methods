@@ -25,5 +25,6 @@ public:
 	vector<double> thomasAlgorithm(vector<double> topDiagonal, vector<double> midDiagonal, vector<double> botDiagonal, vector<double> d);
 
 	virtual vector<double> computeRHS(vector<double> &temperature);
+	std::string virtual SchemeName() = 0;
 };
 #endif

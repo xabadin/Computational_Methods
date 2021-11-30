@@ -13,6 +13,7 @@ public:
 
 	double NextTimeStep(Parameters parameters, int i, double DeltaT); //Compute result using v0 <=> (n-1) and v1 <=> (n) values to find v2 <=> (n+1) values
 
-	std::string SchemeName(double DeltaT); //Return name of the scheme, used in the printer class
+	std::string SchemeName(); //Return name of the scheme, used in the printer class
+
 };
 #endif

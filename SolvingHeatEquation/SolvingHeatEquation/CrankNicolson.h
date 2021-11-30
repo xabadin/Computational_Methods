@@ -1,6 +1,7 @@
 #ifndef CRANKNICOLSON_H // include guard
 #define CRANKNICOLSON_H
 #include <cmath>
+#include<string>
 #include "implicitSchemes.h"
 
 class CrankNicolson : public ImplicitSchemes {
@@ -19,5 +20,6 @@ public:
 
 	// Compute RHS of CrankNicolson scheme
 	virtual vector<double> computeRHS(vector<double>& initialValues);
+	std::string SchemeName();
 };
 #endif

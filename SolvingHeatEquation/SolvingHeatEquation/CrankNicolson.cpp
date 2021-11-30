@@ -34,10 +34,15 @@ vector <double> CrankNicolson::computeRHS(vector<double>& temperature)
 {
 	ImplicitSchemes::computeRHS(temperature);
 	vector<double> temp = temperature;
-	for (int i = 1; i < temp.size() - 1; i++)
+	for (int unsigned i = 1; i < temp.size() - 1; i++)
 	{
 		temp[i] = (1 - 2 * a) * temperature[i] + a * temperature[i + 1] + a * temperature[i - 1];
 
 	}
 	return temp;
+}
+
+std::string CrankNicolson::SchemeName() {
+	std::string str = "CrankNicolson";
+	return str;
 }
