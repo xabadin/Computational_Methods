@@ -113,11 +113,21 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		wallTemperature = computeRHS(wallTemperature);
 		wallTemperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, wallTemperature);
 	}
+	int computtime = std::clock() - start;
+	setComputationalTime(computtime);
 	return schemeSolutions;
 }
 
 std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &RHS) 
 {
 	return RHS;
+}
+
+void ImplicitSchemes::setComputationalTime(int time) {
+	(*this).computationalTime = time;
+}
+
+double ImplicitSchemes::getComputationalTime() {
+	return (*this).computationalTime;
 }
 

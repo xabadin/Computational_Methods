@@ -18,7 +18,7 @@ vector <double> CrankNicolson::computeRHS(vector<double>& RHS)
 {
 	ImplicitSchemes::computeRHS(RHS);
 	vector<double> temp = RHS;
-	for (int i = 1; i < temp.size() - 1; i++)
+	for (int unsigned i = 1; i < temp.size() - 1; i++)
 	{
 		temp[i] = (1 - 2 * r) * RHS[i] + r * RHS[i + 1] + r * RHS[i - 1];
 

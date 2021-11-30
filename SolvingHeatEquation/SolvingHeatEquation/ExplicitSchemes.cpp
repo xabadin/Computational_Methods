@@ -39,7 +39,7 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 		}
 
 		//to get only the 0.1's values
-		if (n%10 == 0) {			
+		if (n%10 == 0) {	
 			schemeSolutions.push_back(v2);
 		}
 

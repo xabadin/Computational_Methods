@@ -11,9 +11,9 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 	ofs << "x;Scheme;Error;Analytical" << std::endl;
 
 	for (int unsigned t = 0; t < schemesolutions.size(); t++) {
-		ofs << "T= " << ((double)t + 1.0) * 0.1 << std::endl;
+		ofs << "T= " << (double)t * 0.1 << std::endl;
 		for (int x = 0; x < parameters.getSpacePoints(); x++) {
-			ofs << x * 0.05 << ";" << schemesolutions[t][x] << ";" << schemesolutions[t][x] - analyticalSolutions[t][x] << ";" << analyticalSolutions[t][x] << std::endl;
+			ofs << x * 0.05 << ";" << schemesolutions[t][x] << ";" << std::abs(schemesolutions[t][x] - analyticalSolutions[t][x]) << ";" << analyticalSolutions[t][x] << std::endl;
 		}
 	}
 }
@@ -26,7 +26,13 @@ void Printer::printAnalytical(Parameters parameters) {
 	}
 	ofs << std::endl;
 	for (int unsigned i = 0; i < analyticalSolutions.size(); i++) {
-		ofs << parameters.getVecOutputTimePoints()[i] << ";";
+		if (i == 0) {
+			ofs << 0.0 << ";";
+		}
+		else {
+			ofs << parameters.getVecOutputTimePoints()[i-1] << ";";
+		}
+		
 
 		for (int unsigned x = 0; x < analyticalSolutions[i].size(); x++) {
 			ofs << analyticalSolutions[i][x] << ";";
