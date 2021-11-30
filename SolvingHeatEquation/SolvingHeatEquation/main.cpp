@@ -41,12 +41,12 @@ int main()
 	for (int indexDeltaT = 0; indexDeltaT < parameters.getVecDeltaT().size(); ++indexDeltaT)
 	{
 		Laasonen laasonen = Laasonen(parameters, indexDeltaT);
-		printer.print(parameters, "laasonen" + std::to_string(parameters.getVecDeltaT()[indexDeltaT]), laasonen.solve(parameters, indexDeltaT));
+		printer.print(parameters, laasonen.schemeName() + std::to_string(parameters.getVecDeltaT()[indexDeltaT]), laasonen.solve(parameters, indexDeltaT));
 	}
 
+	//It would be nice if 0 add a variable name (firstdeltaT or something like that)
 	CrankNicolson crankNicolson = CrankNicolson(parameters, 0);
-
-	printer.print(parameters, "crankNicolson" + std::to_string(parameters.getVecDeltaT()[0]), crankNicolson.solve(parameters, 0));
+	printer.print(parameters, crankNicolson.schemeName(), crankNicolson.solve(parameters, 0));
 
 	return 0;
 }

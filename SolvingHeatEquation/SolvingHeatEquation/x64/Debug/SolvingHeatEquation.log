@@ -1,7 +1,2 @@
-﻿  CrankNicolson.cpp
-  ImplicitSchemes.cpp
-C:\Users\x.bilbao\Documents\GitHub\SolvingHeatEquation\SolvingHeatEquation\SolvingHeatEquation\ImplicitSchemes.cpp(30,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  Laasonen.cpp
-  main.cpp
-  Generating Code...
+﻿  main.cpp
   SolvingHeatEquation.vcxproj -> C:\Users\x.bilbao\Documents\GitHub\SolvingHeatEquation\SolvingHeatEquation\x64\Debug\SolvingHeatEquation.exe
