@@ -58,7 +58,7 @@ int main()
 	printer.print(parameters, crankNicolson.schemeName(), crankNicolson.solve(parameters, 0));
 	computationalTimeResults.push_back(crankNicolson.schemeName() + ";" + std::to_string(crankNicolson.getComputationalTime()));
 
-	//Printing the different computational times in a csv file
+	//Printing the computational times of each scheme (laasonen has a different computational time for each deltaT) in a csv file
 	printer.printComputationalTime(computationalTimeResults);
 
 	return 0;
