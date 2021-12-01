@@ -1,8 +1,8 @@
 #ifndef EXPLICITSCHEMES_H
 #define EXPLICITSCHEMES_H
-
 #include"Parameters.h"
 #include<string>
+#include<ctime>
 
 class ExplicitSchemes
 {
@@ -11,7 +11,7 @@ protected:
 	std::vector<double> v1; //N values
 	std::vector<double> v0; //N-1 values
 
-	int computationalTime;
+	double computationalTime;
 
 public:
 	ExplicitSchemes(); //Default constructor
@@ -23,6 +23,6 @@ public:
 	virtual std::string  schemeName() = 0;
 
 	double getComputationalTime();
-	void setComputationalTime(int time);
+	void setComputationalTime(double time);
 };
 #endif

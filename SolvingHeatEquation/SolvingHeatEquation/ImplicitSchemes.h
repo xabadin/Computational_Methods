@@ -13,7 +13,7 @@ protected:
 	// @param a is the constant of the 1D heat partial differential equation
 	double r;
 	//computational time of the scheme
-	int computationalTime;
+	double computationalTime;
 	//Used to store the solutions at each OutputTimePoints selected in the parameters class
 	std::vector<std::vector<double>> schemeSolutions;
 	
@@ -32,6 +32,6 @@ public:
 	virtual std::string schemeName() = 0;
 
 	double getComputationalTime();
-	void setComputationalTime(int time);
+	void setComputationalTime(double time);
 };
 #endif

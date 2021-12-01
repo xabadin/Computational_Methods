@@ -11,8 +11,7 @@ double DuFortFrankel::NextTimeStep(Parameters parameters, int i, double DeltaT) 
 }
 
 std::string DuFortFrankel::schemeName() {
-	std::string str = "DuFortFrankel";
-	return str;
+	return "DuFortFrankel";
 }
 
 
