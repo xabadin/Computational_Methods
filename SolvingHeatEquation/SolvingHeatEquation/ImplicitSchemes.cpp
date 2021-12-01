@@ -2,27 +2,17 @@
 
 // CONSTRUCTORS
 /*
-* Default constructor - initialise the diagonal vectors of the system matrix
-*/
-ImplicitSchemes::ImplicitSchemes() {
-	this->lowerDiagonal = {};
-	this->mainDiagonal = {};
-	this->upperDiagonal = {};
-	this->r = 0;
-	this->computationalTime = 0;
-};
-
-/*
- * Alternate constructor - creates implicit schemes with the given parameters
+ * Default constructor - creates implicit schemes with the given parameters
  * and set the first values of the diagonal vectors
  */
-ImplicitSchemes::ImplicitSchemes(Parameters parameters) {
+ImplicitSchemes::ImplicitSchemes() {
 	this->lowerDiagonal.push_back(0);
 	this->mainDiagonal.push_back(1);
 	this->upperDiagonal.push_back(0);
+	this->schemeSolutions = {};
 	this->r = 0;
 	this->computationalTime = 0;
-}
+};
 
 // SOLVE TRIDIAGONAL SYSTEM A * x = d
 /*

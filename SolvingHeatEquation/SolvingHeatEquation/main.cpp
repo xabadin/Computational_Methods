@@ -13,7 +13,7 @@ int main()
 	Parameters parameters = Parameters();
 	AnalyticalSolution analyticalSolution = AnalyticalSolution(parameters);
 
-	//Vector in which analyticalSolutions are stored
+	//Vector in which the analytical Solutions are stored
 	std::vector<std::vector<double>> analyticalSolutions;
 
 	//Storing computational times of the different schemes in this vector
@@ -47,14 +47,14 @@ int main()
 	//Laasonen in a for loop to compute for the different deltaT
 	for (int unsigned indexDeltaT = 0; indexDeltaT < parameters.getVecDeltaT().size(); ++indexDeltaT)
 	{
-		Laasonen laasonen = Laasonen(parameters, indexDeltaT);
+		Laasonen laasonen = Laasonen(parameters, parameters.getVecDeltaT()[indexDeltaT]);
 		printer.print(parameters, laasonen.schemeName() + std::to_string(parameters.getVecDeltaT()[indexDeltaT]), laasonen.solve(parameters, indexDeltaT));
 		computationalTimeResults.push_back(laasonen.schemeName() + std::to_string(parameters.getVecDeltaT()[indexDeltaT]) + ";" + std::to_string(laasonen.getComputationalTime()));
 	}
 
 	//CrankNicolson only with the first deltaT (0.01)
 	//It would be nice if 0 had a variable name (firstdeltaT or something like that)
-	CrankNicolson crankNicolson = CrankNicolson(parameters, 0);
+	CrankNicolson crankNicolson = CrankNicolson(parameters, parameters.getVecDeltaT()[0]);
 	printer.print(parameters, crankNicolson.schemeName(), crankNicolson.solve(parameters, 0));
 	computationalTimeResults.push_back(crankNicolson.schemeName() + ";" + std::to_string(crankNicolson.getComputationalTime()));
 

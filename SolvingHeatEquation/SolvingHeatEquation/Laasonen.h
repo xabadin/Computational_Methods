@@ -9,7 +9,9 @@ protected:
 
 public:
 	// Constructor
-	Laasonen(Parameters parameters, int indexDeltaT);
+	Laasonen();
+
+	Laasonen(Parameters parameters, double deltaT);
   
 	virtual std::string schemeName();
 };

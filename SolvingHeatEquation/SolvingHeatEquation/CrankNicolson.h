@@ -6,7 +6,8 @@ class CrankNicolson : public ImplicitSchemes {
 protected:
 
 public:
-	CrankNicolson(Parameters parameters, int indexDeltaT);
+	CrankNicolson();
+	CrankNicolson(Parameters parameters, double deltaT);
 
 	// Compute RHS of CrankNicolson scheme
 	virtual std::vector<double> computeRHS(std::vector<double>& RHS);

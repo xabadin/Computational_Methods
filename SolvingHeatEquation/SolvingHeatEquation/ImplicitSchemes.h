@@ -21,8 +21,6 @@ public:
 	// Default contructor
 	ImplicitSchemes();
 
-	ImplicitSchemes(Parameters parameters);
-
 	std::vector<std::vector<double>> solve(Parameters parameters, int indexDeltaT);
 
 	// Thomas Algorithm for solving the tridiagonal system A * x = d
