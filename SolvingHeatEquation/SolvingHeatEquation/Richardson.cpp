@@ -1,6 +1,8 @@
 #include "Richardson.h"
 
 //Constructor
+Richardson::Richardson() {};
+
 Richardson::Richardson(Parameters parameters) : ExplicitSchemes(parameters) {} //Constructor with parameters
 
 double Richardson::NextTimeStep(Parameters parameters, int i, double DeltaT) {
@@ -9,7 +11,6 @@ double Richardson::NextTimeStep(Parameters parameters, int i, double DeltaT) {
 	//return 0.1;
 }
 
-std::string Richardson::SchemeName(double DeltaT) {
-	std::string str = "Richard" + std::to_string(DeltaT);
-	return str;
+std::string Richardson::schemeName() {
+	return "Richardson";
 }

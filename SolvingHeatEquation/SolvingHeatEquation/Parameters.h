@@ -28,7 +28,7 @@ public:
 	double getSurfaceTemp();
 	double getInitialTemp();
 	std::vector<double> getVecDeltaT();
-	std::vector<int> getTimePoints();
-	std::vector<double> getOutputTimePoints();
+	std::vector<int> getVecTimePoints();
+	std::vector<double> getVecOutputTimePoints();
 };
 #endif
