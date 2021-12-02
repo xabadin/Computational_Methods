@@ -1,18 +1,20 @@
 #ifndef LAASONEN_H // include guard
 #define LAASONEN_H
-#include <cmath>
-#include<string>
 #include "implicitSchemes.h"
+#include <cmath>
+#include <string>
 
-class Laasonen : public ImplicitSchemes {
-protected:
-
+class Laasonen : public ImplicitSchemes 
+{
 public:
-	// Constructor
+	// Default constructor
 	Laasonen();
 
+	// Alternate Constructor with parameters
 	Laasonen(Parameters parameters, double deltaT);
   
+	// Return the name of the scheme
 	virtual std::string schemeName();
 };
+
 #endif

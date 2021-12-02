@@ -1,26 +1,25 @@
-#ifndef PARAMETERS_H
+#ifndef PARAMETERS_H // include guard
 #define PARAMETERS_H 
-
 #include<vector>
 
-class Parameters
-{
+class Parameters {
 private:
-
-	double diffusivity = 0.1; // 0.1 ft^2/hr
-	double deltaX; // 0.05
-	double length; // 1 ft
-	int spacePoints;// = int((length / deltaX) + 0.5); // 40
-	double surfaceTemp; // 300
-	double initialTemp; // 100
-
-	std::vector<double> vecDeltaT; // 
-	std::vector<int> timePoints; // 0, 0.5
-	std::vector<double> outputTimePoints; // 0.1 - 0.2 - 0.3 - 0.4 - 0.5
+	// PARAMETERS OF THE HEAT PDE
+	double diffusivity; // diffusivity of the heat PDE
+	double deltaX; // distance between two adjusant points in the mesh
+	double length; // thickness of the wall
+	int spacePoints;// the number of space points
+	double surfaceTemp; // the surface temperature
+	double initialTemp; // the initial temperature
+	std::vector<double> vecDeltaT; // vector of delta T values
+	std::vector<int> timePoints; // vector of number of time points according to deltaT
+	std::vector<double> outputTimePoints; // time points {0.1 - 0.2 - 0.3 - 0.4 - 0.5} in which the results are displayed
 
 public:
-	Parameters(); //default constructor
+	// Default constructor
+	Parameters(); 
 
+	// Accessor methods
 	double getDiffusivity();
 	double getDeltaX();
 	double getLength();
@@ -31,4 +30,5 @@ public:
 	std::vector<int> getVecTimePoints();
 	std::vector<double> getVecOutputTimePoints();
 };
+
 #endif

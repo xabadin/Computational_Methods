@@ -1,19 +1,22 @@
-#pragma once
-#ifndef DUFORTFRANKEL_H
+#ifndef DUFORTFRANKEL_H // include guard
 #define DUFORTFRANKEL_H
-
 #include"ExplicitSchemes.h"
 #include<string>
 
-class DuFortFrankel : public ExplicitSchemes {
+class DuFortFrankel : public ExplicitSchemes 
+{
 public:
+	// Default constructor
+	DuFortFrankel();
 
-	DuFortFrankel(); //Default constructor
-	DuFortFrankel(Parameters parameters); //Constructor with parameters
+	// Alternate Constructor with parameters
+	DuFortFrankel(Parameters parameters); 
 
-	double NextTimeStep(Parameters parameters, int i, double DeltaT); //Compute result using v0 <=> (n-1) and v1 <=> (n) values to find v2 <=> (n+1) values
+	// Compute the result using  v0 <=> (n-1) and v1 <=> (n) values to find v2 <=> (n+1) values
+	double NextTimeStep(Parameters parameters, int i, double DeltaT);
 
-	std::string schemeName(); //Return name of the scheme, used in the printer class
-
+	// Return the name of the scheme
+	std::string schemeName();
 };
+
 #endif

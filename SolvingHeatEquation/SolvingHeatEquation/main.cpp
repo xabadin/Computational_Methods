@@ -1,3 +1,16 @@
+/***
+*	Xabadin Bilbao, Kahina Chelli, Lucas Pin-Belloc
+*	
+*	MSc. Computational and Software Techniques in Engineering
+*		Software Engineering for Technical Computing option
+* 
+*	School of Aerospace, Transport and Manufacturing
+*				Cranfield University
+*					2021 - 2022
+*
+*	1D HEAT CONDUCTION PARTIAL DIFFERENCIAL EQUATION SOLVER 
+*/
+
 #include "parameters.h"
 #include "AnalyticalSolution.h"
 #include "ImplicitSchemes.h"
@@ -9,42 +22,65 @@
 
 int main()
 {
-	//Initialisation of parameters and analytical solution class
+	/*
+	* Initialisation of parameters and analytical solution
+	*/
 	Parameters parameters = Parameters();
 	AnalyticalSolution analyticalSolution = AnalyticalSolution(parameters);
 
-	//Vector in which the analytical Solutions are stored
+	/*
+	* Vector in which the analytical Solutions are stored
+	*/
 	std::vector<std::vector<double>> analyticalSolutions;
 
-	//Storing computational times of the different schemes in this vector
+	/*
+	* Vector to store the computational times of the different schemes
+	*/
 	std::vector<std::string> computationalTimeResults;
 
-	//To generate the analytical solutions for the different time points.
+	/*
+	* Generate the analytical solution for the different time points
+	*/
 	analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, 0.0));
 	for (int unsigned i = 0; i < parameters.getVecOutputTimePoints().size(); i++) {
 		analyticalSolutions.push_back(analyticalSolution.ComputeAnalyticalSolution(parameters, parameters.getVecOutputTimePoints()[i]));
 	}
 
-	//Initialisation of the explicit schemes classes
+	/*
+	* Initialisation of the explicit schemes
+	*/
 	DuFortFrankel duFortFrankel = DuFortFrankel(parameters);
 	Richardson richardson = Richardson(parameters);
 
-	//Initialisatoin of the printer
+	// PRINT THE ANALYTICAL AND NUMERICAL SOLUTIONS AND COMPUTATIONAL TIME
+	/*
+	* Initialisatoin of the printer
+	*/
 	Printer printer = Printer(analyticalSolutions);
 	
-	//Printing the analytical solution
+	/*
+	* Print the analytical solution
+	*/
 	printer.printAnalytical(parameters);
 
-	//Print the Explicit schemes results and get the computational time in the vector
-	//DuFortFrankel
+	// Print explicit schemes solutions- DUFORT-FRANKEL AND RICHARDSON
+	/*
+	* Print DuFort-Frankel scheme results and get the computational time in the vector
+	*/
 	printer.print(parameters, duFortFrankel.schemeName(), duFortFrankel.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]));
 	computationalTimeResults.push_back(duFortFrankel.schemeName() + ";" + std::to_string(duFortFrankel.getComputationalTime()));
-	//Richardson
+
+	/*
+	* Print Richardson scheme results and get the computational time in the vector
+	*/
 	printer.print(parameters, richardson.schemeName(), richardson.solve(parameters, parameters.getVecDeltaT()[0], parameters.getVecTimePoints()[0]));
 	computationalTimeResults.push_back(richardson.schemeName() + ";" + std::to_string(richardson.getComputationalTime()));
 	
-	//Print the results of the Implicit Schemes and get the respective computationaltime
-	//Laasonen in a for loop to compute for the different deltaT
+	// Print implicit schemes solutions - LAASONEN AND CRANK-NICHOLSON
+	/*
+	* Print Laasonen scheme results and get the computational time in the vector
+	* The results computed for the different DeltaT given of the heat problem definition
+	*/
 	for (int unsigned indexDeltaT = 0; indexDeltaT < parameters.getVecDeltaT().size(); ++indexDeltaT)
 	{
 		Laasonen laasonen = Laasonen(parameters, parameters.getVecDeltaT()[indexDeltaT]);
@@ -52,13 +88,18 @@ int main()
 		computationalTimeResults.push_back(laasonen.schemeName() + std::to_string(parameters.getVecDeltaT()[indexDeltaT]) + ";" + std::to_string(laasonen.getComputationalTime()));
 	}
 
-	//CrankNicolson only with the first deltaT (0.01)
-	//It would be nice if 0 had a variable name (firstdeltaT or something like that)
+	/*
+	* Print Crank-Nicholson scheme results and get the computational time in the vector
+	*/	
 	CrankNicolson crankNicolson = CrankNicolson(parameters, parameters.getVecDeltaT()[0]);
 	printer.print(parameters, crankNicolson.schemeName(), crankNicolson.solve(parameters, 0));
 	computationalTimeResults.push_back(crankNicolson.schemeName() + ";" + std::to_string(crankNicolson.getComputationalTime()));
 
-	//Printing the computational times of each scheme (laasonen has a different computational time for each deltaT) in a csv file
+	// Print computational time for each scheme - EXPLICIT AND IMPLICIT
+	/*
+	* The computational time of DuFort-Frankel, Richardson and Crank-Nicholson schemes computaional time for DeltaT = 0.01
+	* Laasonen scheme has a different computational time for each deltaT
+	*/
 	printer.printComputationalTime(computationalTimeResults);
 
 	return 0;
