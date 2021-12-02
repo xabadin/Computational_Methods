@@ -19,8 +19,8 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 		}
 	}
 
-	double sumL1 = 0.;
-	double sumL2 = 0.;
+	double sumL1 = 0.0;
+	double sumL2 = 0.0;
 	//Calcul des normes
 	for (int unsigned i = 0; i < errorVector.size(); i++) {
 		sumL1 += errorVector[i];
