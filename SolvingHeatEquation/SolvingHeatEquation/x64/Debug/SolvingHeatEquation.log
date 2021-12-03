@@ -1,2 +1,3 @@
-﻿  ImplicitSchemes.cpp
+﻿  ExplicitSchemes.cpp
+C:\Users\l.pinbelloc\source\repos\Tamerelatpute\SolvingHeatEquation\SolvingHeatEquation\ExplicitSchemes.cpp(34,13): warning C4244: 'argument' : conversion de 'double' en 'const unsigned __int64', perte possible de données
   SolvingHeatEquation.vcxproj -> C:\Users\l.pinbelloc\source\repos\Tamerelatpute\SolvingHeatEquation\x64\Debug\SolvingHeatEquation.exe

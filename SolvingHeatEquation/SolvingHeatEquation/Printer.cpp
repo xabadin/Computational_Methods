@@ -7,7 +7,8 @@ Printer::Printer(std::vector<std::vector<double>> vectors) {
 };
 
 void Printer::print(Parameters parameters, std::string filename, std::vector<std::vector<double>> schemesolutions) {
-	std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
+	//std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
+	std::ofstream ofs(filename + ".csv");
 	ofs << "x;Scheme;Truncation Error;Analytical Solution" << std::endl;
 	std::vector<double> errorVector;
 

@@ -11,6 +11,11 @@ double Richardson::NextTimeStep(Parameters parameters, int i, double DeltaT) {
 	//return 0.1;
 }
 
+double Richardson::getTimeStep1(Parameters parameters, int i, double DeltaT) {
+	double r = (parameters.getDiffusivity() * DeltaT) / pow(parameters.getDeltaX(), 2);
+	return v0[i] + r * (v0[i + 1] - 2 * v0[i] + v0[i - 1]);
+}
+
 std::string Richardson::schemeName() {
 	return "Richardson";
 }
