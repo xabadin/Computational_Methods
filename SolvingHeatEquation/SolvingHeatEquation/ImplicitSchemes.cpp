@@ -22,7 +22,7 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> d) {
 	/*
 	* @param n is the size of the RHS vector d in the tri-diagonal system A * x = d
 	*/
-	int n = d.size();
+	int n = int(d.size());
 
 	/*
 	* set the system matrix by the given diagonals vectors of the implicit schemes
@@ -73,7 +73,7 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> d) {
 
 std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
 {
-	std::clock_t start = clock();
+	auto start = std::chrono::high_resolution_clock::now();
 	
 	/*
 	* brief solve 1D heat equation using Laasonen leads to a tridiagonal system
@@ -120,8 +120,8 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		wallTemperature = computeRHS(wallTemperature);
 		wallTemperature = thomasAlgorithm(wallTemperature);
 	}
-	clock_t end = clock();
-	setComputationalTime(1000.0 * ((double)end - (double)start) / (double)CLOCKS_PER_SEC);
+	auto end = std::chrono::high_resolution_clock::now();
+	setComputationalTime(double(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()));
 	return schemeSolutions;
 }
 

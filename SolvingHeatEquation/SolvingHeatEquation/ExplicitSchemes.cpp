@@ -15,8 +15,7 @@ ExplicitSchemes::ExplicitSchemes(Parameters parameters) {
 
 
 std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, double DeltaT, int meshsize_t) {
-	// passer le deltaT dans le constructeur
-	std::clock_t start = clock();
+	auto start = std::chrono::high_resolution_clock::now();
 	std::vector<std::vector<double>> schemeSolutions;
 
 	for (int n = 0; n < meshsize_t; n++)
@@ -38,8 +37,8 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 		v0 = v1;
 		v1 = v2;
 	}
-	clock_t end = clock();
-	setComputationalTime(1000.0 * ((double)end - (double)start) / (double)CLOCKS_PER_SEC);
+	auto finish = std::chrono::high_resolution_clock::now();
+	setComputationalTime(double(std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count()));
 	return schemeSolutions;
 }
 
