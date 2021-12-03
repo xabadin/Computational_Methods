@@ -1,5 +1,8 @@
 #include "implicitSchemes.h"
 
+#include<iostream>
+#include<time.h>
+
 // CONSTRUCTORS
 /*
  * Default constructor - creates implicit schemes with the given parameters
@@ -67,7 +70,6 @@ std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> d) {
 	for (int i = n - 2; i >= 0; i--) {
 		solutionX[i] = d[i] - topDiagonal[i] * solutionX[i + 1];
 	}
-
 	return solutionX;
 }
 
@@ -91,6 +93,7 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 	* as explained in the report, the upper and lower diagonals set to (-a), whereas the main diagonal set to (1 + (2 * a))
 	*/
 	for (int i = 1; i < parameters.getSpacePoints() - 1; i++) {
+		std::cout << "A: " << i << std::endl;
 		lowerDiagonal.push_back(-r);
 		mainDiagonal.push_back(1 + (2 * r));
 		upperDiagonal.push_back(-r);
@@ -111,6 +114,7 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 	* @return schemeSolutions
 	*/
 	for (int t = 0; t < parameters.getVecTimePoints()[indexDeltaT]; t++) {
+		std::cout << "B: " << t << std::endl;
 		//Puts the solutions in schemeSolutions 
 		//It only works if the outputs are equally spaced
 		if (t % ((parameters.getVecTimePoints()[indexDeltaT]) / parameters.getVecOutputTimePoints().size()) == 0) {

@@ -7,7 +7,8 @@ Printer::Printer(std::vector<std::vector<double>> vectors) {
 };
 
 void Printer::print(Parameters parameters, std::string filename, std::vector<std::vector<double>> schemesolutions) {
-	std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
+	//std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
+	std::ofstream ofs(filename + ".csv");
 	ofs << "x;Scheme;Truncation Error;Analytical Solution" << std::endl;
 	std::vector<double> errorVector;
 
@@ -31,7 +32,8 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 }
 
 void Printer::printAnalytical(Parameters parameters) {
-	std::ofstream ofs("../OutPutFiles/AnalyticalSolution.csv");
+	//std::ofstream ofs("../OutPutFiles/AnalyticalSolution.csv");
+	std::ofstream ofs("AnalyticalSolution.csv");
 	ofs << "x;";
 	for (double i = 0; i < parameters.getSpacePoints()*parameters.getDeltaX(); i += parameters.getDeltaX()) {
 		ofs << i << ";";
@@ -52,7 +54,8 @@ void Printer::printAnalytical(Parameters parameters) {
 }
 
 void Printer::printComputationalTime(std::vector<std::string> computationalTimeResults) {
-	std::ofstream ofs("../OutPutFiles/ComputationalTime.csv");
+	//std::ofstream ofs("../OutPutFiles/ComputationalTime.csv");
+	std::ofstream ofs("ComputationalTime.csv");
 	for (int unsigned i = 0; i < computationalTimeResults.size(); i++) {
 		ofs << computationalTimeResults[i] << std::endl;
 	}
