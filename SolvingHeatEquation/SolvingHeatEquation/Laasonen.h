@@ -8,11 +8,11 @@ class Laasonen : public ImplicitSchemes {
 protected:
 
 public:
-	// Constructor
+	// Default constructor
 	Laasonen();
-
+	// Alternate Constructor with parameters
 	Laasonen(Parameters parameters, double deltaT);
-  
+	// Return the name of the scheme
 	virtual std::string schemeName();
 };
 #endif
