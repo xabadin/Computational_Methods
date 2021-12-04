@@ -10,7 +10,7 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 	//std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
 	std::ofstream ofs(filename + ".csv");
 	ofs << "x;Scheme;Truncation Error;Analytical Solution" << std::endl;
-	std::vector<double> errorVector;
+	std::vector<double> errorVector; 
 
 	for (int unsigned t = 0; t < schemesolutions.size(); t++) {
 		ofs << "T= " << (double)t * 0.1 << std::endl;
@@ -18,21 +18,22 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 			ofs << x * 0.05 << ";" << schemesolutions[t][x] << ";" << std::abs(schemesolutions[t][x] - analyticalSolutions[t][x]) << ";" << analyticalSolutions[t][x] << std::endl;
 			errorVector.push_back(std::abs(schemesolutions[t][x] - analyticalSolutions[t][x]));
 		}
-	}
+		double sumL1 = 0.0;
+		double sumL2 = 0.0;
+		for (int unsigned i = 0; i < errorVector.size(); i++) {
+			sumL1 += errorVector[i];
+			sumL2 += pow(errorVector[i], 2);
+		}
+		ofs << "L1;" << sumL1 / errorVector.size() << std::endl;
+		ofs << "L2;" << sqrt(sumL2) / errorVector.size() << std::endl;
 
-	double sumL1 = 0.0;
-	double sumL2 = 0.0;
-	//Calcul des normes
-	for (int unsigned i = 0; i < errorVector.size(); i++) {
-		sumL1 += errorVector[i];
-		sumL2 += pow(errorVector[i], 2);
+		errorVector.clear();
 	}
-	ofs << "L1;" << sumL1 << std::endl;
-	ofs << "L2;" << sqrt(sumL2) << std::endl;
 }
 
 void Printer::printAnalytical(Parameters parameters) {
-	std::ofstream ofs("../OutPutFiles/AnalyticalSolution.csv");
+	//std::ofstream ofs("../OutPutFiles/AnalyticalSolution.csv");
+	std::ofstream ofs("AnalyticalSolution.csv");
 	ofs << "x;";
 	for (double i = 0; i < parameters.getSpacePoints()*parameters.getDeltaX(); i += parameters.getDeltaX()) {
 		ofs << i << ";";
@@ -53,7 +54,8 @@ void Printer::printAnalytical(Parameters parameters) {
 }
 
 void Printer::printComputationalTime(std::vector<std::string> computationalTimeResults) {
-	std::ofstream ofs("../OutPutFiles/ComputationalTime.csv");
+	//std::ofstream ofs("../OutPutFiles/ComputationalTime.csv");
+	std::ofstream ofs("ComputationalTime.csv");
 	for (int unsigned i = 0; i < computationalTimeResults.size(); i++) {
 		ofs << computationalTimeResults[i] << std::endl;
 	}

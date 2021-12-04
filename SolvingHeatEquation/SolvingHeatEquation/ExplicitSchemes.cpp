@@ -1,6 +1,5 @@
 #include "ExplicitSchemes.h"
-#include<fstream>
-#include<iostream>
+
 
 ExplicitSchemes::ExplicitSchemes() {
 	this->computationalTime = 0;
@@ -20,22 +19,16 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 
 	auto start = std::chrono::high_resolution_clock::now();
 	std::vector<std::vector<double>> schemeSolutions;
-	std::ofstream ofs(schemeName()+"TESTENTIER.csv");
-	ofs << "x;";
-	for (double i = 0; i < 0.04; i += 0.001) {
-		ofs << i << ";";
-	}
-	ofs << std::endl;
+
 	for (int n = 0; n < meshsize_t; n++)
 	{
-		ofs << "t = " << n * DeltaT << " n = " << n << " ;";
 		if (n == 0) {
 			v0[0] = 300;
 			v1[0] = 300;
 			v2[0] = 300;
-			v0[double(parameters.getSpacePoints() - 1)] = 300;
-			v1[double(parameters.getSpacePoints() - 1)] = 300;
-			v2[double(parameters.getSpacePoints() - 1)] = 300;
+			v0[parameters.getSpacePoints() - 1] = 300;
+			v1[parameters.getSpacePoints() - 1] = 300;
+			v2[parameters.getSpacePoints() - 1] = 300;
 		}
 		else if (n == 1) {
 			for (int i = 0; i < parameters.getSpacePoints(); i++)
@@ -63,21 +56,8 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 				}
 			}
 		}
-		for (int unsigned l = 0; l < v2.size();l++)
-		{
-			if (n == 0) {
-				ofs << v0[l] << ";";
-			}
-			else if (n == 1) {
-				ofs << v1[l] << ";";
-			}
-			else {
-				ofs << v2[l] << ";";
-			}
-		}
-		ofs << std::endl;
+
 		if (n % ((parameters.getVecTimePoints()[0]) / parameters.getVecOutputTimePoints().size()) == 0) {
-			std::cout << "n = " << n << std::endl;
 			if (n == 0) {
 				schemeSolutions.push_back(v0);
 			}
