@@ -116,24 +116,32 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		if (t % ((parameters.getVecTimePoints()[indexDeltaT]) / parameters.getVecOutputTimePoints().size()) == 0) {
 			schemeSolutions.push_back(wallTemperature);
 		}
-
+		// Compute the RHS of Crank-Nicholson scheme
 		wallTemperature = computeRHS(wallTemperature);
+		// Get the temperature
 		wallTemperature = thomasAlgorithm(wallTemperature);
 	}
 	auto end = std::chrono::high_resolution_clock::now();
 	setComputationalTime(double(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()));
 	return schemeSolutions;
 }
-
+/*
+* @return RHS vector of Crank-Nicholson scheme
+*/
 std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &RHS) 
 {
 	return RHS;
 }
-
+// ACCESSOR METHODS
+/*
+* Set the computational time for the scheme
+*/
 void ImplicitSchemes::setComputationalTime(double time) {
 	(*this).computationalTime = time;
 }
-
+/*
+* Return the computational time for the scheme
+*/
 double ImplicitSchemes::getComputationalTime() {
 	return (*this).computationalTime;
 }

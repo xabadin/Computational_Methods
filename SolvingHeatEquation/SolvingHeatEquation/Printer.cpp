@@ -1,15 +1,25 @@
 #include"Printer.h"
-
+//CONSTRUCTORS
+/*
+* Default constructor
+*/
 Printer::Printer() {}
 
+/*
+* Alternate constructor - creates analytical solution results
+*/
 Printer::Printer(std::vector<std::vector<double>> vectors) {
 	(*this).analyticalSolutions = vectors;
 };
 
+// PRINT RESULTS AND COMPUTATIONAL TIME
+/*
+* Print the result of the numerical solutions of each scheme
+*/
 void Printer::print(Parameters parameters, std::string filename, std::vector<std::vector<double>> schemesolutions) {
 	std::ofstream ofs("../OutPutFiles/" + filename + ".csv");
 	ofs << "x;Scheme;Truncation Error;Analytical Solution" << std::endl;
-	std::vector<double> errorVector;
+	std::vector<double> errorVector; 
 
 	for (int unsigned t = 0; t < schemesolutions.size(); t++) {
 		ofs << "T= " << (double)t * 0.1 << std::endl;
@@ -17,19 +27,22 @@ void Printer::print(Parameters parameters, std::string filename, std::vector<std
 			ofs << x * 0.05 << ";" << schemesolutions[t][x] << ";" << std::abs(schemesolutions[t][x] - analyticalSolutions[t][x]) << ";" << analyticalSolutions[t][x] << std::endl;
 			errorVector.push_back(std::abs(schemesolutions[t][x] - analyticalSolutions[t][x]));
 		}
-	}
+		// Compute of the norms L1 and L2
+		double sumL1 = 0.0;
+		double sumL2 = 0.0;
+		for (int unsigned i = 0; i < errorVector.size(); i++) {
+			sumL1 += errorVector[i];
+			sumL2 += pow(errorVector[i], 2);
+		}
+		ofs << "L1;" << sumL1 / errorVector.size() << std::endl;
+		ofs << "L2;" << sqrt(sumL2) / errorVector.size() << std::endl;
 
-	double sumL1 = 0.0;
-	double sumL2 = 0.0;
-	//Calcul des normes
-	for (int unsigned i = 0; i < errorVector.size(); i++) {
-		sumL1 += errorVector[i];
-		sumL2 += pow(errorVector[i], 2);
+		errorVector.clear();
 	}
-	ofs << "L1;" << sumL1 << std::endl;
-	ofs << "L2;" << sqrt(sumL2) << std::endl;
 }
-
+/*
+* Print the result of the analytical solution
+*/
 void Printer::printAnalytical(Parameters parameters) {
 	std::ofstream ofs("../OutPutFiles/AnalyticalSolution.csv");
 	ofs << "x;";
@@ -50,7 +63,9 @@ void Printer::printAnalytical(Parameters parameters) {
 		ofs << std::endl;
 	}
 }
-
+/*
+* Print the computational time of each scheme
+*/
 void Printer::printComputationalTime(std::vector<std::string> computationalTimeResults) {
 	std::ofstream ofs("../OutPutFiles/ComputationalTime.csv");
 	for (int unsigned i = 0; i < computationalTimeResults.size(); i++) {

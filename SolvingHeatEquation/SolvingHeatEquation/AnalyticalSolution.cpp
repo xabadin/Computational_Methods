@@ -1,13 +1,23 @@
 #define _USE_MATH_DEFINES
 #include "AnalyticalSolution.h"
-
+//CONSTRUCTORS
+/*
+* Default constructor
+*/
 AnalyticalSolution::AnalyticalSolution() {};
 
+/*
+* Alternate constructor - creates the Analytical solution
+*/
 AnalyticalSolution::AnalyticalSolution(Parameters parameters)
 {
 	this->AnalyticalResults = std::vector<double>(parameters.getSpacePoints());
 }
 
+// COMPUTE THE ANALYTICAL SOLUTION
+/*
+* Compute the Analytical solution for 10000 iterations
+*/
 std::vector<double> AnalyticalSolution::ComputeAnalyticalSolution(Parameters parameters, const double time)
 {
 	double sum = 0;
@@ -18,5 +28,6 @@ std::vector<double> AnalyticalSolution::ComputeAnalyticalSolution(Parameters par
 		AnalyticalResults[i] = parameters.getSurfaceTemp() + 2 * (parameters.getInitialTemp() - parameters.getSurfaceTemp()) * sum;
 		sum = 0;
 	}
+	// @return the result of the Analytical solution
 	return AnalyticalResults;
 }
