@@ -31,12 +31,12 @@ std::vector<std::vector<double>> ExplicitSchemes::solve(Parameters parameters, d
 	for (int n = 0; n < meshsize_t; n++)
 	{
 		if (n == 0) {
-		v0[0] = 300;
-		v1[0] = 300;
-		v2[0] = 300;
-		v0[parameters.getSpacePoints() - 1] = 300;
-		v1[parameters.getSpacePoints() - 1] = 300;
-		v2[parameters.getSpacePoints() - 1] = 300;
+		v0[0] = parameters.getSurfaceTemp();
+		v1[0] = parameters.getSurfaceTemp();
+		v2[0] = parameters.getSurfaceTemp();
+		v0[parameters.getSpacePoints() - 1] = parameters.getSurfaceTemp();
+		v1[parameters.getSpacePoints() - 1] = parameters.getSurfaceTemp();
+		v2[parameters.getSpacePoints() - 1] = parameters.getSurfaceTemp();
 		}
 		else if (n == 1) {
 			for (int i = 0; i < parameters.getSpacePoints(); i++)
