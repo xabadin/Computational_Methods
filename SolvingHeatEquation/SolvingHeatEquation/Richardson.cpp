@@ -10,6 +10,6 @@ double Richardson::NextTimeStep(Parameters parameters, int i, double DeltaT) {
 }
 
 std::string Richardson::SchemeName(double DeltaT) {
-	std::string str = "Richard" + std::to_string(DeltaT);
+	std::string str = "Richardson" + std::to_string(DeltaT);
 	return str;
 }
