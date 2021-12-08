@@ -1,6 +1,8 @@
 #ifndef IMPLICITSCHEMES_H // include guard
 #define IMPLICITSCHEMES_H
 #include "parameters.h"
+#include<chrono>
+#include<string>
 
 class ImplicitSchemes {
 protected:
@@ -19,13 +21,15 @@ public:
 	// Default contructor
 	ImplicitSchemes();
 
-	ImplicitSchemes(Parameters parameters);
-
 	std::vector<std::vector<double>> solve(Parameters parameters, int indexDeltaT);
 
 	// Thomas Algorithm for solving the tridiagonal system A * x = d
-	std::vector<double> thomasAlgorithm(std::vector<double> topDiagonal, std::vector<double> midDiagonal, std::vector<double> botDiagonal, std::vector<double> d);
+	std::vector<double> thomasAlgorithm(std::vector<double> d);
 
 	virtual std::vector<double> computeRHS(std::vector<double> &RHS);
+	virtual std::string schemeName() = 0;
+
+	double getComputationalTime();
+	void setComputationalTime(double time);
 };
 #endif

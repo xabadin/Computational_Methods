@@ -2,69 +2,79 @@
 
 // CONSTRUCTORS
 /*
-* Default constructor
-*/
+ * Default constructor - creates implicit schemes with the given parameters
+ * and set the first values of the diagonal vectors
+ */
 ImplicitSchemes::ImplicitSchemes() {
-	this->r = 0;
-	this->computationalTime = 0;
-};
-
-ImplicitSchemes::ImplicitSchemes(Parameters parameters) {
 	this->lowerDiagonal.push_back(0);
 	this->mainDiagonal.push_back(1);
 	this->upperDiagonal.push_back(0);
+	this->schemeSolutions = {};
 	this->r = 0;
 	this->computationalTime = 0;
-}
+};
 
 // SOLVE TRIDIAGONAL SYSTEM A * x = d
 /*
 * Implement Thomas Algorithm to solve the tri-diagonal system A * x = d of the implicit schemes
 */
-std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> topDiagonal, std::vector<double> midDiagonal, std::vector<double> botDiagonal, std::vector<double> d) {
+std::vector<double> ImplicitSchemes::thomasAlgorithm(std::vector<double> d) {
 	/*
-	* @param n is the size in the tri-diagonal system A * x = d
-	* n is the size of the vector midDiagonal and the right hand side vector d
-	* n-1 is the size of the vector topDiagonal and botDiagonal
+	* @param n is the size of the RHS vector d in the tri-diagonal system A * x = d
 	*/
-	int n = d.size();
-
-	// x is the vector solution of the unknowns to calculate in the tri-diagonal system A * x = d
-	std::vector<double> x(n, 0);
-
-	// @param temp is to temporary save the values
-	double temp;
+	int n = int(d.size());
 
 	/*
-	* brief Thomas Algorithm based on LU decomposition, where the system A*x = d can be re-written as LU = r
-	* where L, U are the lower and upper triangular matrices respectively
-	* then the system can be solved, first by solving Lp = r for p and then Ux = p for x, which is the solution
-	* Forwards steps:
-	* Solve the Lp = r, by setting the main diagonal to 1 and lower and upper diagonals to 0
-	* @param topDiagonal is the upper diagonal of the matrix
-	* @param middiagonal is the main diagonal of the matrix
-	* @param botDiagonal is the lower diagonal of the matrix
+	* set the system matrix by the given diagonals vectors of the implicit schemes
 	*/
-	for (int i = 1; i < n - 1; i++) {
+	std::vector<double> botDiagonal = lowerDiagonal;
+	std::vector<double> midDiagonal = mainDiagonal;
+	std::vector<double> topDiagonal = upperDiagonal;
+
+	/*
+	* solutionX is the vector solution of the unknowns x to calculate in the system A * x = d
+	*/
+	std::vector<double> solutionX(n, 0);
+
+	/*
+	* @param denominator is a common denominator to calculate values of the vectors topDiagonal and d
+	*/
+	double denominator;
+
+	/*
+	* brief Thomas Algorithm solve the system matrix in two steps
+	* @see the report for detailed explanation how the algorithm works
+	*/
+	/*
+	* forward elimination step
+	*/
+	for (int i = 0; i < n - 1; i++) {
 		if (i == 0) {
 			topDiagonal[0] /= midDiagonal[0];
 			d[0] /= midDiagonal[0];
 		}
 		else {
-			temp = 1.0 / (midDiagonal[i] - topDiagonal[i - 1] * botDiagonal[i]);
-			topDiagonal[i] *= temp;
-			d[i] = (d[i] - d[i - 1] * botDiagonal[i]) * temp;
+			denominator = 1.0 / (midDiagonal[i] - (botDiagonal[i] * topDiagonal[i - 1]));
+			topDiagonal[i] *= denominator;
+			d[i] = (d[i] - (botDiagonal[i] * d[i - 1])) * denominator;
 		}
 	}
-	x[n - 1] = d[n - 1];
+
+	/*
+	* backward substitution step
+	*/
+	solutionX[n - 1] = d[n - 1];
 	for (int i = n - 2; i >= 0; i--) {
-		x[i] = d[i] - topDiagonal[i] * x[i + 1];
+		solutionX[i] = d[i] - topDiagonal[i] * solutionX[i + 1];
 	}
-	return x;
+
+	return solutionX;
 }
 
 std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, int indexDeltaT)
 {
+	auto start = std::chrono::high_resolution_clock::now();
+	
 	/*
 	* brief solve 1D heat equation using Laasonen leads to a tridiagonal system
 	* that can be efficiently solve by Thomas Algorithm, @see the implementation of Thomas Algorithm in ImplicitSchemes file
@@ -106,15 +116,33 @@ std::vector<std::vector<double>> ImplicitSchemes::solve(Parameters parameters, i
 		if (t % ((parameters.getVecTimePoints()[indexDeltaT]) / parameters.getVecOutputTimePoints().size()) == 0) {
 			schemeSolutions.push_back(wallTemperature);
 		}
-
+		// Compute the RHS of Crank-Nicholson scheme
 		wallTemperature = computeRHS(wallTemperature);
-		wallTemperature = thomasAlgorithm(lowerDiagonal, mainDiagonal, upperDiagonal, wallTemperature);
+		// Get the temperature
+		wallTemperature = thomasAlgorithm(wallTemperature);
 	}
+	auto end = std::chrono::high_resolution_clock::now();
+	setComputationalTime(double(std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count()));
 	return schemeSolutions;
 }
-
-std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &wallTemperature) 
+/*
+* @return RHS vector of Crank-Nicholson scheme
+*/
+std::vector<double> ImplicitSchemes::computeRHS(std::vector<double> &RHS) 
 {
-	return wallTemperature;
+	return RHS;
+}
+// ACCESSOR METHODS
+/*
+* Set the computational time for the scheme
+*/
+void ImplicitSchemes::setComputationalTime(double time) {
+	(*this).computationalTime = time;
+}
+/*
+* Return the computational time for the scheme
+*/
+double ImplicitSchemes::getComputationalTime() {
+	return (*this).computationalTime;
 }
 
