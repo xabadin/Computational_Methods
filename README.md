@@ -452,14 +452,14 @@ Dynamics’, Technical Report SAND2005-2745, Sandia National Laboratories,
 2005. [Accessed 26 October 2021]
     
 [3] Endre Suli, ’A Brief Introduction to the Numerical Analysis of PDEs’, Mathematical Institute University of Oxford, URL
-: http : //people.maths.ox.ac.uk/suli/lecturenotes.pdf . [Accessed 27 October 2021]
+:http://people.maths.ox.ac.uk/suli/lecturenotes.pdf . [Accessed 27 October 2021]
     
-[4] W. T. Lee, ’Tridiagonal Matrices: Thomas Algorithm’, Scientific Computation, MS6021, URL:http : //www.industrial − maths.com/ms6021thomas.pdf.
+[4] W. T. Lee, ’Tridiagonal Matrices: Thomas Algorithm’, Scientific Computation, MS6021, URL:http://www.industrial−maths.com/ms6021thomas.pdf.
 [Accessed 12 November 2021]
     
 [5] Gerald W. Recktenwald, ’Finite-Difference Approximations to the
 Heat Equation’, Portland State University, Portland, Oregon USA,
-URL:http : //dma.dima.uniroma1.it/users/lsaadn/MAT ERIALE/F Dheat.pdf ,
+URL:http://dma.dima.uniroma1.it/users/lsaadn/MATERIALE/FDheat.pdf ,
 2004. [Accessed 13 November 2021]
     
 [6] C. Pozrikidis, ’Introduction to Theoretical and Computational Fluid Dynamics’,
