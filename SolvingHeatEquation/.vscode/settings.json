@@ -1,0 +1,9 @@
+{
+    "cmake.configureOnOpen": true,
+    "cmake.generator": "MinGW Makefiles",
+    "cmake.configureSettings": {
+        "CMAKE_CXX_COMPILER": "C:/MinGW/bin/g++.exe", // This should be the path to your MinGW g++.exe file
+        "CMAKE_C_COMPILER": "C:/MinGW/bin/gcc.exe" // This should be the path to your MinGW gcc.exe file
+    },
+    "cmake.buildDirectory": "${workspaceFolder}/build"
+}

@@ -1,0 +1,33 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "configure",
+            "type": "shell",
+            "command": "cmake -S ${workspaceFolder} -B ${workspaceFolder}/build -G 'MinGW Makefiles'",
+            "group": "build",
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "PATH": "${env:PATH};C:/MinGW/bin" // This should be the path to your MinGW bin folder
+                }
+            }
+        },
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "cmake --build ${workspaceFolder}/build",
+            "dependsOn": "configure", // Add this line to make sure the configure task runs before building
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "env": {
+                    "PATH": "${env:PATH};C:/MinGW/bin" // This should be the path to your MinGW bin folder
+                }
+            }
+        }
+    ]
+}
